@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Loop until a valid filename is entered
+while true; do
+  # Prompt for filename
+  read -p "Enter a filename: " filename
+
+  # Check if file exists (using -f for regular files)
+  if [[ -f "$filename" ]]; then
+    echo "File '$filename' exists."
+    break  # Exit the loop if file exists
+  else
+    echo "File '$filename' does not exist. Please try again."
+  fi
+done
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Counter for line numbers
+line_number=1
+
+# Loop through each line in data.txt
+while IFS= read -r line; do
+  # Print line number and content
+  echo "$line_number: $line"
+  # Increment line number counter
+  ((line_number++))
+done < "data.txt"
