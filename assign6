@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Log file path (modify if needed)
+log_file="error.log"
+
+# Extract lines containing "error" and format output
+grep 'error' "$log_file" | awk -F' ' '{print $1,$2,$4}' | sed 's/\[//' | sed 's/\]//'
+
+echo "Extracted error messages are shown above"
+

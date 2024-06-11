@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Get directory path from argument (or prompt if not provided)
+if [ $# -eq 0 ]; then
+  read -p "Enter directory path to backup: " directory
+else
+  directory="$1"
+fi
+
+# Validate directory existence
+if [ ! -d "$directory" ]; then
+  echo "Error: Directory '$directory' does not exist."
+  exit 1
+fi
+
+# Get backup filename (includes timestamp)
+backup_file="backup_$(date +'%Y-%m-%d_%H-%M-%S').tar.gz"
+# Specify backup location (modify if needed)
+backup_dir="/path/to/backups"  # Replace with your desired backup directory
+
+# Create backup directory if it doesn't exist
+if [ ! -d "$backup_dir" ]; then
+  mkdir -p "$backup_dir"
+fi
+
+# Create compressed archive
+tar -czvf "$backup_dir/$backup_file" "$directory/*"
+
+# Print confirmation message
+echo "Backup created: $backup_dir/$backup_file"
+

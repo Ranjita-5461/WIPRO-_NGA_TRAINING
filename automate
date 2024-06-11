@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Configuration (modify these variables)
+REPO_URL="https://your_repo_url.git"  # Replace with your repository URL
+BUILD_SCRIPT="./build.sh"            # Replace with your build script path
+DEPLOY_SCRIPT="./deploy.sh"          # Replace with your deployment script path
+SERVERS_FILE="servers.txt"            # Replace with your server list file
+ROLLING_FACTOR=2                       # Number of servers to deploy to at a time
+
+# Function to deploy to a server
+deploy_to_server() {
+  server_ip="$1"
+
+  # Update code on the server (pull latest changes)
+  ssh "$server_ip" "git -C $REPO_URL pull"
+
+  # Build the application on the server
+  ssh "$server_ip" "$BUILD_SCRIPT"
+
+
+  echo "Deployed to server: $server_ip"
+}
+
+# Read server list
+servers=( $(cat "$SERVERS_FILE") )
+
+# Loop through servers in a rolling fashion
+for (( i=0; i<${#servers[@]}; i=$((i + ROLLING_FACTOR)) )); do
+  # Get a sub-array of servers for this deployment round
+  server_batch=( "${servers[@]:i:$ROLLING_FACTOR}" )
+
+  # Deploy to the current batch of servers
+  for server in "${server_batch[@]}"; do
+    deploy_to_server "$server" &  # Deploy in the background
+  done
+
+  # Wait for all background deployments to finish in this round
+  wait
+
+  echo "Waiting before deploying to the next batch..."
+  sleep 60  # Adjust sleep duration between deployment rounds (optional)
+done
+echo "Deployment completed!"
+
