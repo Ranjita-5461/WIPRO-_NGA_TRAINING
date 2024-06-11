@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Process identification (choose either name or PID)
+process_name="your_process_name"  # OR process_pid=1234 (replace with actual values)
+
+# Loop continuously
+while true; do
+  # Check if the process is running
+  if ps -C "$process_name" > /dev/null 2>&1; then
+    # Process is running
+    echo "$(date +'%Y-%m-%d %H:%M:%S'): Process '$process_name' is running."
+  else
+    # Process is not running
+    echo "$(date +'%Y-%m-%d %H:%M:%S'): Process '$process_name' is NOT running!"
+    # Optional action: Restart the process (uncomment if desired)
+    # Your command to restart the process (replace with your specific command)
+    # /path/to/restart_script.sh
+  fi
+
+  # Sleep for a certain interval before checking again (adjust as needed)
+  sleep 5
+done
+
+echo "Monitoring stopped."
+

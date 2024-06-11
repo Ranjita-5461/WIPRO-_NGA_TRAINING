@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Function to display the menu
+display_menu() {
+  echo "Menu:"
+  echo "1. Add"
+  echo "2. Delete"
+  echo "3. View"
+  echo "4. Exit"
+  echo "Enter your choice: "
+}
+
+# Main loop
+while true; do
+  # Display the menu
+  display_menu
+
+  # Read user input
+  read choice
+
+  # Handle user selection
+  case $choice in
+    1) echo "Add functionality here";;
+    2) echo "Delete functionality here";;
+    3) echo "View functionality here";;
+    4) echo "Exiting..."; break;;
+    *) echo "Invalid choice. Please try again.";;
+  esac
+done
+
+echo "Goodbye!"
+
+
+
+
