@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Download directory (optional, adjust as needed)
+download_dir="./downloads"
+
+# Check if download directory exists (optional)
+if [[ ! -d "$download_dir" ]]; then
+  mkdir -p "$download_dir"
+fi
+
+# Loop through each URL in urls.txt
+while IFS= read -r url; do
+  # Extract filename from URL (optional, customize if needed)
+  filename="${url##*/}"
+# Construct the download path (optional, adjust as needed)
+  download_path="$download_dir/$filename"
+
+  # Download the file using wget
+  wget -q -O "$download_path" "$url"  
+
+  # Check if download was successful (optional)
+  if [[ $? -eq 0 ]]; then
+    echo "Downloaded: $filename"
+  else
+    echo "Failed to download: $url"
+  fi
+done < "urls.txt"
+
+echo "Download complete."
+
