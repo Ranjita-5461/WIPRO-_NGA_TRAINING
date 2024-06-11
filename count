@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Loop from 10 to 1 (inclusive)
+for i in {10..1}; do
+  echo "$i"
+  # Add a one-second delay (optional)
+  # sleep 1
+done
+
+echo "BOOM"
+
